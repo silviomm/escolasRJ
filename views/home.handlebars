@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Trabalho de BD</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+<body>
+  <div id="wrapper" class="toggled">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/">
+                        BD
+                    </a>
+                </li>
+                <li>
+                    <a href="escolaBairro">Escolas no seu Bairro</a>
+                </li>
+                <li>
+                    <a href="disciplinasDaEscola">Disciplinas na Sua Escola</a>
+                </li>
+                <li>
+                    <a href="escolasAcimaDoIdeb">Escolas acima do IDEB</a>
+                </li>
+                <li>
+                    <a href="qntdDeEscolasPorBairro">Bairros com Mais Escolas</a>
+                </li>
+                <li>
+                    <a href="qntdDeAlunosPorBairro">Bairros com Mais Alunos</a>
+                </li>
+                <li>
+                    <a href="bairrosComMaisMenos">Diferença de Alunos</a>
+                </li>
+                <li>
+                    <a href="bairrosComBrtTrem">Bairros com BRT e Trem</a>
+                </li>
+                <li>
+                    <a href="brtNaEscola">BRT perto da Sua Escola</a>
+                </li>
+                <li>
+                    <a href="escolasSemTelefone">Escolas Sem Telefone</a>
+                </li>
+                <li>
+                    <a href="transporteNaEscola">Transporte perto sua Escola!</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <!-- HOMEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE-->
+                        {{#if home}}
+                          <h1>Trabalho de Banco de Dados</h1>
+                          <br>
+                          <img src="https://scontent.fgig4-1.fna.fbcdn.net/v/t1.0-9/13332766_10205036488751693_7082274394187745658_n.jpg?oh=970d842ad44e429c4980875c82b5a9f3&oe=59C998EE" class="img-circle" alt="Cinque Terre" width="150" height="150">
+
+                          <img src="https://scontent.fgig4-1.fna.fbcdn.net/v/t1.0-9/15338630_1161633940584543_7375771417456573219_n.jpg?oh=fe11a9ea1ee62a0df1c4a63c068dcc56&oe=59E81F5D" class="img-circle" alt="Cinque Terre" width="150" height="150">
+
+                          <img src="https://scontent.fgig4-1.fna.fbcdn.net/v/t1.0-9/16426278_1339929192736214_1270168788986379857_n.jpg?oh=2d69ec90abbb9e0e9a517050a486e4fe&oe=59CB544C" class="img-circle" alt="Cinque Terre" width="150" height="150">
+
+                          <img src="https://scontent.fgig4-1.fna.fbcdn.net/v/t1.0-9/19029762_1559478894063837_465010369419157268_n.jpg?oh=cc1d80808c457f29a94ac1e27157a10b&oe=599C50B0" class="img-circle" alt="Cinque Terre" width="150" height="150">
+                        {{/if}}
+
+
+                        <!-- ESCOLABAIRROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+                        {{#if escolaBairro}}
+                          <h1>Escolas no seu Bairro!</h1>
+                          {{#if semEscola}}
+                            <h3>Desculpe, sem escolas nesse bairro na nossa base de dados.</h3>
+                          {{/if}}
+                          <div class="form-group">
+                            <form class="" action="escolaBairro" method="post">
+                              <input class="form-control" type="text" name="nomeBairro" placeholder="nome">
+                              <input  class="btn btn-primary" type="submit" name="submit" value="ok">
+                            </form>
+                          </div>
+                          {{#if mapa}}
+                            <div id="map" style="width:800px;height:400px"></div>
+                          {{/if}}
+                        {{/if}}
+
+
+                        <!-- DISCIPLINAS DA ESCOLA-->
+                        {{#if disciplinasDaEscola}}
+                          <h2>Disciplinas da Sua Escola!</h2>
+                          <div class="form-group">
+                            <form class="" action="disciplinasDaEscola" method="post">
+                              <input class="form-control" type="text" name="nomeEscola" placeholder="nome">
+                              <input  class="btn btn-primary" type="submit" name="submit" value="ok">
+                            </form>
+                          </div>
+                          {{#if temDisciplinas}}
+                            {{#each disciplinas}}
+                              <p>{{this.nome}}</p>
+                            {{/each}}
+                            {{/if}}
+                          {{/if}}
+                          {{#if naoTem}}
+                            <h3>Desculpe, mas não existem disciplinas dessa escola na nossa base de dados</h3>
+                          {{/if}}
+
+                        <!-- ESCOLAS ACIMA DO IDEB-->
+                        {{#if escolasAcimaDoIdeb}}
+                          <h2>Aqui estão as melhores escolas do RJ!</h2>
+                          {{#each escolas}}
+                            <ul>
+                              <li>{{this.bairro_nome}}</li>
+                              <li>{{this.nome}}</li>
+                            </ul>
+                          {{/each}}
+                        {{/if}}
+
+                        <!-- ESCOLAS SEM TELEFONE-->
+                        {{#if escolasSemTelefone}}
+                          {{#each escolas}}
+                            <ul>
+                              <li>{{this.nome}}</li>
+                            </ul>
+                          {{/each}}
+                        {{/if}}
+
+
+                        <!-- BAIRROS COM MAIS ESCOLAS-->
+                        {{#if qntdDeEscolasPorBairro}}
+                          <h1>Diga seu Top x!</h1>
+                          <div class="form-group">
+                            <form class="" action="qntdDeEscolasPorBairro" method="post">
+                              <input class="form-control" type="text" name="qntd" placeholder="nome">
+                              <input  class="btn btn-primary" type="submit" name="submit" value="ok">
+                            </form>
+                          </div>
+                          {{#if grafico}}
+                            <h2>Top {{qntd}} Bairros Com Mais Escolas!</h2>
+                            <canvas id="doughnut-chart" width="800" height="600"></canvas>
+                          {{/if}}
+                        {{/if}}
+
+                        <!-- MAIS E MENOS ALUNUOS-->
+                        {{#if bairrosComMaisMenos}}
+                          <h2>bairrosComMaisMenos</h2>
+                          <canvas id="bar-chart" width="800" height="450"></canvas>
+                        {{/if}}
+
+                        <!-- BAIRROS COM BRT E TREM-->
+                        {{#if bairrosComBrtTrem}}
+                          <h2>Bairros com BRT e Trem!</h2>
+                          <ul>
+                          {{#each bairros}}
+                              <li>{{this.nome}}</li>
+                          {{/each}}
+                          </ul>
+                        {{/if}}
+
+
+                        <!-- BRT NAS ESCOLAS-->
+                        {{#if brtNaEscola}}
+                          <h1>BRT Que Passa perto da Sua Escola!</h1>
+                          {{#if semBrt}}
+                            <h3>Desculpe, sem estações de BRT nesse bairro na nossa base de dados.</h3>
+                          {{/if}}
+                          <div class="form-group">
+                            <form class="" action="brtNaEscola" method="post">
+                              <input class="form-control" type="text" name="nomeEscola" placeholder="nome">
+                              <input  class="btn btn-primary" type="submit" name="submit" value="ok">
+                            </form>
+                          </div>
+                          {{#if comBrt}}
+                            <h3>Escola: {{nomeEscola}}</h3>
+                            <h4>Bairro: {{nomeBairro}}</h4>
+                            <ul>
+                              {{#each estacoes}}
+                                <p>{{this.estacao}} - {{this.linha}}</p>
+                              {{/each}}
+                            </ul>
+                          {{/if}}
+                        {{/if}}
+
+                        <!-- BAIRROS COM MAIS ALUNOS-->
+                        {{#if qntdDeAlunosPorBairro}}
+                          <h1>Diga seu Top x!</h1>
+                          <div class="form-group">
+                            <form class="" action="qntdDeAlunosPorBairro" method="post">
+                              <input class="form-control" type="text" name="qntd" placeholder="nome">
+                              <input  class="btn btn-primary" type="submit" name="submit" value="ok">
+                            </form>
+                          </div>
+                          {{#if grafico}}
+                            <h2>Top {{qntd}} Bairros Com Mais Alunos!</h2>
+                            <canvas id="doughnut-chart2" width="800" height="600"></canvas>
+                          {{/if}}
+                        {{/if}}
+
+
+
+                        <!-- TRANSPORTES NO BAIRRO DA ESCOLA-->
+                        {{#if transporteNaEscola}}
+                          <h1>Transportes perto da Sua escola!</h1>
+                          <div class="form-group">
+                            <form class="" action="transporteNaEscola" method="post">
+                              <input class="form-control" type="text" name="nomeEscola" placeholder="nome">
+                              <input  class="btn btn-primary" type="submit" name="submit" value="ok">
+                            </form>
+                          </div>
+                          {{#if semT}}
+                            <h2>Desculpe, sem transportes na nossa base de Dados.</h2>
+                          {{/if}}
+                          {{#if comT}}
+                            <h2>Escola : {{nomeEscola}}</h2>
+                            <h3>Bairro: {{nomeBairro}}</h3>
+                            {{#if comBrts}}
+                              <h3>BRT:</h3>
+                              {{#each brts}}
+                                <p>{{this.nome}}</p>
+                              {{/each}}
+                            {{/if}}
+                            {{#if comMetros}}
+                              <h3>Metro:</h3>
+                              {{#each metros}}
+                                <p>{{this.nome}}</p>
+                              {{/each}}
+                            {{/if}}
+                            {{#if comTrens}}
+                              <h3>Trem:</h3>
+                              {{#each trens}}
+                                <p>{{this.nome}}</p>
+                              {{/each}}
+                            {{/if}}
+                            <div id="map2" style="width:800px;height:400px"></div>
+                          {{/if}}
+                        {{/if}}
+
+                        <br><br><br>
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+
+    <!-- MAIOR/MENOR QNTD DE ALUNOS NO BAIRRO-->
+    {{#if bairrosComMaisMenos}}
+    <script>
+      new Chart(document.getElementById("bar-chart"), {
+        type: 'bar',
+        data: {
+          labels: ["Campo Grande", "Sampaio"],
+          datasets: [
+            {
+              label: "Quantidade de Alunos: ",
+              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+              data: [{{qntds}}]
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Bairro com Mais / Bairro com Menos Alunos'
+          }
+        }
+      });
+    </script>
+    {{/if}}
+
+
+
+    <!-- QUANTIDADE DE ESCOLAS POR BAIRRO-->
+    {{#if grafico}}
+    <script>
+      var aux = [];
+      var aux2 = [];
+      {{#each bairros}}
+        aux.push("{{this}}");
+        aux2.push("#3e95cd");
+        aux2.push("#8e5ea2");
+        aux2.push("#3cba9f");
+        aux2.push("#c45850");
+        aux2.push("#e8c3b9");
+      {{/each}}
+      new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+          labels: aux,
+          datasets: [
+            {
+              label: "Quantidade de Escolas: ",
+              backgroundColor: aux2,
+              data: [{{qntds}}]
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Quantidade de Escolas Por Bairro'
+          }
+        }
+      });
+    </script>
+    {{/if}}
+
+
+
+    <!-- QUANTIDADE DE ALUNOS POR BAIRRO-->
+    {{#if grafico}}
+    <script>
+      var aux = [];
+      var aux2 = [];
+      {{#each bairros}}
+        aux.push("{{this}}");
+        aux2.push("#3e95cd");
+        aux2.push("#8e5ea2");
+        aux2.push("#3cba9f");
+        aux2.push("#c45850");
+        aux2.push("#e8c3b9");
+      {{/each}}
+      new Chart(document.getElementById("doughnut-chart2"), {
+        type: 'doughnut',
+        data: {
+          labels: aux,
+          datasets: [
+            {
+              label: "Quantidade de Alunos: ",
+              backgroundColor: aux2,
+              data: [{{qntds}}]
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Quantidade de Alunos Por Bairro'
+          }
+        }
+      });
+    </script>
+    {{/if}}
+
+
+    <!-- Script do mapa AIzaSyAxDU4FKAIFfER86dev0Z3gaW9DRU0HCV8-->
+
+    {{#if mapa}}
+      <script>
+        function myMap() {
+          var bounds = new google.maps.LatLngBounds();
+          var mapOptions = {
+            center: new google.maps.LatLng({{latPrincipal}}, {{longPrincipal}}),
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.roadmap
+          }
+          var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+          var marker, position, infowindow, auxStrings = [];
+          {{#each escolas}}
+            position = new google.maps.LatLng({{this.latitude}}, {{this.longitude}});
+            bounds.extend(position);
+            auxStrings.push("Escola: "+"{{this.nome}}");
+            marker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: auxStrings[{{@index}}]
+            });
+            infowindow = new google.maps.InfoWindow({
+                content: auxStrings[{{@index}}]
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                  infowindow.setContent(auxStrings[i]);
+                  infowindow.open(map, marker);
+              }
+            })(marker, {{@index}}));
+            map.fitBounds(bounds);
+          {{/each}}
+        }
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrGBKJ2Ee6OazedQbgiI-OE-CbOn95FO0&callback=myMap"></script>
+    {{/if}}
+
+
+
+
+
+    {{#if comT}}
+      <script>
+        function myMap() {
+          var bounds = new google.maps.LatLngBounds();
+          var mapOptions = {
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.roadmap
+          }
+          var map = new google.maps.Map(document.getElementById("map2"), mapOptions);
+          var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+          var escolaP = new google.maps.LatLng({{latEscola}}, {{longEscola}});
+          var beachMarker = new google.maps.Marker({
+            position: escolaP,
+            map: map,
+            icon: image,
+            title: "Escola: {{nomeEscola}}"
+          });
+          var infoEscola = new google.maps.InfoWindow({
+            content: "Escola: {{nomeEscola}}"
+          });
+          beachMarker.addListener('click', function() {
+            infoEscola.open(map, beachMarker);
+          });
+          bounds.extend(escolaP);
+          map.fitBounds(bounds);
+          var marker, position, infowindow, auxStrings = [];
+
+          //-------------------------BRT--------------------------------------
+          {{#each brts}}
+            position = new google.maps.LatLng({{this.latitude}}, {{this.longitude}});
+            bounds.extend(position);
+            auxStrings.push("BRT: "+"{{this.nome}}");
+            marker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: auxStrings[{{@index}}]
+            });
+            infowindow = new google.maps.InfoWindow({
+                content: auxStrings[{{@index}}]
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                  infowindow.setContent(auxStrings[i]);
+                  infowindow.open(map, marker);
+              }
+            })(marker, {{@index}}));
+            map.fitBounds(bounds);
+          {{/each}}
+
+          var auxStrings2 = [];
+          //-------------------------METRO--------------------------------------
+          {{#each metros}}
+            position = new google.maps.LatLng({{this.latitude}}, {{this.longitude}});
+            bounds.extend(position);
+            auxStrings2.push("Metro: "+"{{this.nome}}");
+            marker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: auxStrings2[{{@index}}]
+            });
+            infowindow = new google.maps.InfoWindow({
+                content: auxStrings2[{{@index}}]
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                  infowindow.setContent(auxStrings2[i]);
+                  infowindow.open(map, marker);
+              }
+            })(marker, {{@index}}));
+            map.fitBounds(bounds);
+          {{/each}}
+
+          var auxStrings3 = [];
+          //-------------------------TREM--------------------------------------
+          {{#each trens}}
+            position = new google.maps.LatLng({{this.latitude}}, {{this.longitude}});
+            bounds.extend(position);
+            auxStrings3.push("Trem: "+"{{this.nome}}");
+            marker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: auxStrings3[{{@index}}]
+            });
+            infowindow = new google.maps.InfoWindow({
+                content: auxStrings3[{{@index}}]
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                  infowindow.setContent(auxStrings3[i]);
+                  infowindow.open(map, marker);
+              }
+            })(marker, {{@index}}));
+            map.fitBounds(bounds);
+          {{/each}}
+        }
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrGBKJ2Ee6OazedQbgiI-OE-CbOn95FO0&callback=myMap"></script>
+    {{/if}}
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</div>
+</body>
+</html>

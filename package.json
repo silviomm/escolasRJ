@@ -1,0 +1,21 @@
+{
+  "name": "trabd",
+  "version": "1.0.0",
+  "description": "Localização, Transportes e IDEB das escolas do RJ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silviomm/escolasRJ.git"
+  },
+  "bugs": {
+    "url": "https://github.com/silviomm/escolasRJ/issues"
+  },
+  "homepage": "https://github.com/silviomm/escolasRJ#readme"
+}
